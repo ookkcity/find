@@ -6,56 +6,188 @@
   <title>OKCITY 找歌</title>
   <style>
     :root{
-      --bg1:#f6f8ff; --bg2:#eef3ff; --card:#ffffffd9; --text:#1f2a44;
-      --muted:#5f6b85; --line:#d8e0f5; --btn:#ffffff;
-      --shadow:0 8px 24px rgba(31,42,68,.08);
+      --bg0:#0b0616;
+      --bg1:#140a2b;
+      --bg2:#1b0f3b;
+      --card:rgba(22,14,44,.62);
+      --card-border:rgba(168,132,255,.28);
+      --text:#f3eeff;
+      --muted:#b8addd;
+      --line:rgba(173,139,255,.35);
+      --btn:rgba(255,255,255,.04);
+      --btn-hover:rgba(186,145,255,.12);
+      --shadow:0 18px 48px rgba(8,4,18,.55);
+      --glow:0 0 0 1px rgba(203,176,255,.18), 0 8px 26px rgba(129,78,255,.24);
+      --radius:20px;
     }
+
     *{box-sizing:border-box}
+
     body{
-      margin:0; font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      color:var(--text); background:linear-gradient(180deg,var(--bg1),var(--bg2));
-      min-height:100vh; overflow-x:hidden;
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Noto Sans TC",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%, #2c155f55 0%, transparent 55%),
+        radial-gradient(1000px 640px at 95% 8%, #5a2ec744 0%, transparent 52%),
+        linear-gradient(160deg,var(--bg0),var(--bg1) 45%,var(--bg2));
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
+    /* 柔光噪點 */
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image:
+        radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:3px 3px;
+      opacity:.08;
+      mix-blend-mode:screen;
+    }
+
+    /* 淡色 OK LOGO 背景浮水印 */
     .bg-logo{
-      position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.08;
-      background-repeat:no-repeat; background-position:center;
-      background-size:min(78vw,520px);
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:min(76vw,560px);
       background-image:url("https://drive.google.com/thumbnail?id=1jOcZh0B3m8KyNYejdOfK2E7QQM28b-We&sz=w1200");
-      filter:grayscale(100%);
+      opacity:.08;
+      filter:grayscale(100%) brightness(1.6) contrast(.9);
     }
 
-    .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:28px 16px 26px;}
+    .wrap{
+      position:relative; z-index:1;
+      max-width:760px;
+      margin:0 auto;
+      padding:24px 14px 30px;
+    }
+
     .card{
-      background:var(--card); border:1px solid var(--line); border-radius:20px;
-      box-shadow:var(--shadow); padding:18px; backdrop-filter: blur(4px);
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:20px 16px 18px;
+      backdrop-filter: blur(14px) saturate(125%);
+      -webkit-backdrop-filter: blur(14px) saturate(125%);
     }
 
-    .title{margin:0; font-size:24px; line-height:1.35; text-align:center; word-break:break-word;}
-    .subtitle{margin:8px 0 18px; color:var(--muted); font-size:13px; text-align:center;}
+    .title{
+      margin:0;
+      font-size:34px;
+      line-height:1.2;
+      text-align:center;
+      letter-spacing:.3px;
+      word-break:break-word;
+      font-weight:800;
+      text-shadow:0 4px 22px rgba(154,99,255,.35);
+    }
 
-    .btn-list{display:flex; flex-direction:column; gap:12px;}
+    .subtitle{
+      margin:10px 0 18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      letter-spacing:.2px;
+    }
+
+    .btn-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
     .link-btn{
-      display:flex; align-items:center; gap:12px; width:100%;
-      text-decoration:none; color:var(--text); background:var(--btn);
-      border:1px solid var(--line); border-radius:14px; padding:12px 14px; min-height:56px;
-      box-shadow:0 3px 10px rgba(31,42,68,.05);
+      position:relative;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      width:100%;
+      text-decoration:none;
+      color:var(--text);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px 14px;
+      min-height:58px;
+      box-shadow:var(--glow);
+      transition:all .18s ease;
     }
+
+    .link-btn:hover{
+      transform:translateY(-1px);
+      background:linear-gradient(180deg,var(--btn-hover),rgba(255,255,255,.03));
+      border-color:rgba(208,177,255,.6);
+      box-shadow:0 0 0 1px rgba(224,202,255,.26), 0 14px 30px rgba(112,63,236,.30);
+    }
+
+    .link-btn:active{ transform:translateY(0) scale(.995); }
 
     .logo{
-      width:24px; height:24px; border-radius:6px; object-fit:cover; flex:0 0 24px;
-      border:1px solid #e5eaf8; background:#fff;
+      width:26px;
+      height:26px;
+      border-radius:8px;
+      object-fit:cover;
+      flex:0 0 26px;
+      border:1px solid rgba(255,255,255,.2);
+      background:#fff;
     }
-    .label{font-weight:700; font-size:15px;}
 
-    .footer{margin-top:18px; display:flex; justify-content:center;}
-    .ig-round{
-      width:46px; height:46px; border-radius:999px; border:1px solid var(--line); background:#fff;
-      display:flex; align-items:center; justify-content:center; text-decoration:none;
-      box-shadow:0 5px 14px rgba(31,42,68,.08);
+    .label{
+      font-weight:700;
+      font-size:18px;
+      letter-spacing:.2px;
     }
-    .ig-round img{width:22px; height:22px; object-fit:contain;}
-    .warn{margin-top:10px; color:#a33; font-size:12px; text-align:center;}
+
+    .footer{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .ig-round{
+      width:52px;
+      height:52px;
+      border-radius:999px;
+      border:1px solid rgba(233,216,255,.45);
+      background:radial-gradient(circle at 30% 30%, #ffffff 0%, #f4eefe 55%, #ece0ff 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      box-shadow:
+        0 0 0 4px rgba(203,170,255,.12),
+        0 10px 24px rgba(130,74,255,.35);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+
+    .ig-round:hover{
+      transform:translateY(-1px) scale(1.03);
+      box-shadow:
+        0 0 0 5px rgba(221,193,255,.2),
+        0 16px 28px rgba(145,84,255,.42);
+    }
+
+    .ig-round img{
+      width:24px;
+      height:24px;
+      object-fit:contain;
+    }
+
+    .warn{
+      margin-top:10px;
+      color:#ffb7c2;
+      font-size:12px;
+      text-align:center;
+    }
+
+    @media (max-width:560px){
+      .title{font-size:28px}
+      .label{font-size:17px}
+      .card{padding:18px 14px 16px}
+    }
   </style>
 </head>
 <body>
