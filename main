@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OKCITY 找歌</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;background:#0b1220;color:#e8eefc}
+    .wrap{max-width:760px;margin:0 auto;padding:24px 16px}
+    .card{background:#111a2e;border:1px solid #243150;border-radius:16px;padding:18px}
+    h1{margin:0 0 10px}
+    .q{background:#0b1326;border:1px solid #243150;border-radius:12px;padding:12px;margin:10px 0 14px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    a{display:block;text-align:center;padding:12px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #243150;background:#0b1326}
+    @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>🎵 OKCITY 找歌</h1>
+      <div class="q" id="q">讀取中...</div>
+      <div class="grid">
+        <a id="yt" target="_blank" rel="noopener">YouTube Music</a>
+        <a id="sp" target="_blank" rel="noopener">Spotify</a>
+        <a id="am" target="_blank" rel="noopener">Apple Music</a>
+        <a id="kk" target="_blank" rel="noopener">KKBOX</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const artist = (p.get('artist') || '').trim();
+    const song = (p.get('song') || '').trim();
+    const q = [artist, song].filter(Boolean).join(' ').trim() || (p.get('q') || '').trim();
+
+    document.getElementById('q').textContent = q ? `搜尋：${q}` : '未提供關鍵字';
+    const enc = encodeURIComponent(q);
+
+    document.getElementById('yt').href = `https://music.youtube.com/search?q=${enc}`;
+    document.getElementById('sp').href = `https://open.spotify.com/search/${enc}`;
+    document.getElementById('am').href = `https://music.apple.com/tw/search?term=${enc}`;
+    document.getElementById('kk').href = `https://www.kkbox.com/tw/tc/search.php?word=${enc}`;
+  </script>
+</body>
+</html>
