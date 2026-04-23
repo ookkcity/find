@@ -6,149 +6,56 @@
   <title>OKCITY 找歌</title>
   <style>
     :root{
-      --bg1:#f6f8ff;
-      --bg2:#eef3ff;
-      --card:#ffffffd9;
-      --text:#1f2a44;
-      --muted:#5f6b85;
-      --line:#d8e0f5;
-      --btn:#ffffff;
+      --bg1:#f6f8ff; --bg2:#eef3ff; --card:#ffffffd9; --text:#1f2a44;
+      --muted:#5f6b85; --line:#d8e0f5; --btn:#ffffff;
       --shadow:0 8px 24px rgba(31,42,68,.08);
-      --radius:16px;
     }
-
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      color:var(--text);
-      background:linear-gradient(180deg,var(--bg1),var(--bg2));
-      min-height:100vh;
-      overflow-x:hidden;
+      margin:0; font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
+      color:var(--text); background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100vh; overflow-x:hidden;
     }
 
-    /* 淡色 OK LOGO 背景浮水印 */
     .bg-logo{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-      opacity:.08;
-      background-repeat:no-repeat;
-      background-position:center;
+      position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.08;
+      background-repeat:no-repeat; background-position:center;
       background-size:min(78vw,520px);
-      /* TODO: 改成你的 OK LOGO 圖片網址 */
-      background-image:url('https://drive.google.com/uc?id=1jOcZh0B3m8KyNYejdOfK2E7QQM28b-We
-');
+      background-image:url("https://drive.google.com/thumbnail?id=1jOcZh0B3m8KyNYejdOfK2E7QQM28b-We&sz=w1200");
       filter:grayscale(100%);
     }
 
-    .wrap{
-      position:relative;
-      z-index:1;
-      max-width:760px;
-      margin:0 auto;
-      padding:28px 16px 26px;
-    }
-
+    .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:28px 16px 26px;}
     .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:18px;
-      backdrop-filter: blur(4px);
+      background:var(--card); border:1px solid var(--line); border-radius:20px;
+      box-shadow:var(--shadow); padding:18px; backdrop-filter: blur(4px);
     }
 
-    .title{
-      margin:0;
-      font-size:24px;
-      line-height:1.35;
-      letter-spacing:.2px;
-      text-align:center;
-      word-break:break-word;
-    }
+    .title{margin:0; font-size:24px; line-height:1.35; text-align:center; word-break:break-word;}
+    .subtitle{margin:8px 0 18px; color:var(--muted); font-size:13px; text-align:center;}
 
-    .subtitle{
-      margin:8px 0 18px;
-      color:var(--muted);
-      font-size:13px;
-      text-align:center;
-    }
-
-    .btn-list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
+    .btn-list{display:flex; flex-direction:column; gap:12px;}
     .link-btn{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:12px;
-      width:100%;
-      text-decoration:none;
-      color:var(--text);
-      background:var(--btn);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 14px;
-      min-height:56px;
-      transition:.18s ease;
+      display:flex; align-items:center; gap:12px; width:100%;
+      text-decoration:none; color:var(--text); background:var(--btn);
+      border:1px solid var(--line); border-radius:14px; padding:12px 14px; min-height:56px;
       box-shadow:0 3px 10px rgba(31,42,68,.05);
     }
 
-    .link-btn:active{ transform:scale(.99); }
-    .link-btn:hover{ transform:translateY(-1px); }
-
     .logo{
-      width:24px;
-      height:24px;
-      border-radius:6px;
-      object-fit:cover;
-      flex:0 0 24px;
-      border:1px solid #e5eaf8;
-      background:#fff;
+      width:24px; height:24px; border-radius:6px; object-fit:cover; flex:0 0 24px;
+      border:1px solid #e5eaf8; background:#fff;
     }
+    .label{font-weight:700; font-size:15px;}
 
-    .label{
-      font-weight:700;
-      font-size:15px;
-      letter-spacing:.2px;
-    }
-
-    .footer{
-      margin-top:18px;
-      display:flex;
-      justify-content:center;
-    }
-
+    .footer{margin-top:18px; display:flex; justify-content:center;}
     .ig-round{
-      width:46px;
-      height:46px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
+      width:46px; height:46px; border-radius:999px; border:1px solid var(--line); background:#fff;
+      display:flex; align-items:center; justify-content:center; text-decoration:none;
       box-shadow:0 5px 14px rgba(31,42,68,.08);
     }
-
-    .ig-round img{
-      width:22px;
-      height:22px;
-      object-fit:contain;
-    }
-
-    .warn{
-      margin-top:10px;
-      color:#a33;
-      font-size:12px;
-      text-align:center;
-    }
+    .ig-round img{width:22px; height:22px; object-fit:contain;}
+    .warn{margin-top:10px; color:#a33; font-size:12px; text-align:center;}
   </style>
 </head>
 <body>
@@ -161,34 +68,26 @@
 
       <div class="btn-list">
         <a id="yt" class="link-btn" target="_blank" rel="noopener">
-          <img class="logo" src="https://drive.google.com/uc?id=1D6swEIF7VvE6uqzANBF0NIYYZLznF2ns
-" alt="YouTube Music Logo">
+          <img class="logo" src="https://drive.google.com/thumbnail?id=1D6swEIF7VvE6uqzANBF0NIYYZLznF2ns&sz=w200" alt="YouTube Music Logo">
           <span class="label">YouTube Music</span>
         </a>
-
         <a id="sp" class="link-btn" target="_blank" rel="noopener">
-          <img class="logo" src="https://drive.google.com/uc?id=1q1_M90NNz86pGmBufeoiyKxK6QtmaPsz
-" alt="Spotify Logo">
+          <img class="logo" src="https://drive.google.com/thumbnail?id=1q1_M90NNz86pGmBufeoiyKxK6QtmaPsz&sz=w200" alt="Spotify Logo">
           <span class="label">Spotify</span>
         </a>
-
         <a id="am" class="link-btn" target="_blank" rel="noopener">
-          <img class="logo" src="https://drive.google.com/uc?id=1mUg-hU3YSat1cH6GqnhKLiazXW9d-CWP
-" alt="Apple Music Logo">
+          <img class="logo" src="https://drive.google.com/thumbnail?id=1mUg-hU3YSat1cH6GqnhKLiazXW9d-CWP&sz=w200" alt="Apple Music Logo">
           <span class="label">Apple Music</span>
         </a>
-
         <a id="kk" class="link-btn" target="_blank" rel="noopener">
-          <img class="logo" src="https://drive.google.com/uc?id=1KcoYfJ8n2vRU-6EARzbOobiACZmWgwd6
-" alt="KKBOX Logo">
+          <img class="logo" src="https://drive.google.com/thumbnail?id=1KcoYfJ8n2vRU-6EARzbOobiACZmWgwd6&sz=w200" alt="KKBOX Logo">
           <span class="label">KKBOX</span>
         </a>
       </div>
 
       <div class="footer">
         <a class="ig-round" href="https://www.instagram.com/ok._.city" target="_blank" rel="noopener" aria-label="OKCITY IG">
-          <img src="https://drive.google.com/uc?id=1IvLLnDWdAT7YBzlua1Tz6TUgPDHW9zGO
-" alt="Instagram">
+          <img src="https://drive.google.com/thumbnail?id=1IvLLnDWdAT7YBzlua1Tz6TUgPDHW9zGO&sz=w200" alt="Instagram">
         </a>
       </div>
 
@@ -228,9 +127,7 @@
       }
     });
 
-    if (!q) {
-      warnEl.textContent = '提示：請從 LINE 使用「找歌 藝人 歌名」進入此頁。';
-    }
+    if (!q) warnEl.textContent = '提示：請從 LINE 使用「找歌 藝人 歌名」進入此頁。';
   </script>
 </body>
 </html>
