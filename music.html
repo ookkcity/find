@@ -4,85 +4,138 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>OKCITY 找歌</title>
+  <meta name="theme-color" content="#120a2d" />
   <style>
     :root{
-      --bg0:#0b0616;
-      --bg1:#140a2b;
-      --bg2:#1b0f3b;
-      --card:rgba(22,14,44,.62);
-      --card-border:rgba(168,132,255,.28);
-      --text:#f3eeff;
-      --muted:#b8addd;
-      --line:rgba(173,139,255,.35);
-      --btn:rgba(255,255,255,.04);
-      --btn-hover:rgba(186,145,255,.12);
-      --shadow:0 18px 48px rgba(8,4,18,.55);
-      --glow:0 0 0 1px rgba(203,176,255,.18), 0 8px 26px rgba(129,78,255,.24);
-      --radius:20px;
+      --bg0:#070412;
+      --bg1:#110826;
+      --bg2:#1a0f3b;
+      --text:#f5f0ff;
+      --muted:#bfb2e6;
+      --card-bg:rgba(22,13,47,.58);
+      --card-bd:rgba(179,143,255,.28);
+      --line:rgba(196,165,255,.35);
+      --accent:#b084ff;
+      --accent2:#7a5cff;
+      --danger:#ffb7c2;
+      --shadow:0 20px 55px rgba(6,3,14,.6);
+      --glow:0 0 0 1px rgba(222,201,255,.20), 0 14px 36px rgba(120,72,255,.24);
+      --radius:22px;
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
 
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,"Noto Sans TC",sans-serif;
       color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
       background:
-        radial-gradient(1200px 700px at 10% -10%, #2c155f55 0%, transparent 55%),
-        radial-gradient(1000px 640px at 95% 8%, #5a2ec744 0%, transparent 52%),
-        linear-gradient(160deg,var(--bg0),var(--bg1) 45%,var(--bg2));
-      min-height:100vh;
+        radial-gradient(1200px 720px at -8% -10%, #5e2cff40 0%, transparent 55%),
+        radial-gradient(1000px 680px at 108% 5%, #9333ea33 0%, transparent 52%),
+        linear-gradient(160deg,var(--bg0),var(--bg1) 44%,var(--bg2));
       overflow-x:hidden;
+      position:relative;
+      isolation:isolate;
     }
 
-    /* 柔光噪點 */
+    .orb{
+      position:fixed;
+      border-radius:50%;
+      filter:blur(34px);
+      opacity:.35;
+      pointer-events:none;
+      z-index:0;
+      animation: drift 28s ease-in-out infinite alternate;
+    }
+    .orb.o1{
+      width:300px;height:300px; left:-80px; top:-60px;
+      background:#7c3aed66;
+    }
+    .orb.o2{
+      width:260px;height:260px; right:-70px; top:22%;
+      background:#a855f766;
+      animation-delay:2.4s;
+    }
+    .orb.o3{
+      width:220px;height:220px; left:15%; bottom:-90px;
+      background:#22d3ee33;
+      animation-delay:4.2s;
+    }
+
+    @keyframes drift{
+      0%{transform:translateY(-8px) translateX(0) scale(1)}
+      100%{transform:translateY(14px) translateX(12px) scale(1.08)}
+    }
+
     body::before{
       content:"";
-      position:fixed; inset:0; pointer-events:none; z-index:0;
-      background-image:
-        radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
       background-size:3px 3px;
-      opacity:.08;
+      opacity:.07;
       mix-blend-mode:screen;
     }
 
-    /* 淡色 OK LOGO 背景浮水印 */
     .bg-logo{
-      position:fixed; inset:0; pointer-events:none; z-index:0;
+      position:fixed; inset:0; z-index:0; pointer-events:none;
       background-repeat:no-repeat;
       background-position:center;
-      background-size:min(76vw,560px);
+      background-size:min(72vw,560px);
       background-image:url("https://drive.google.com/thumbnail?id=1jOcZh0B3m8KyNYejdOfK2E7QQM28b-We&sz=w1200");
-      opacity:.08;
-      filter:grayscale(100%) brightness(1.6) contrast(.9);
+      opacity:.09;
+      filter:grayscale(100%) brightness(1.65) contrast(.9);
     }
 
     .wrap{
-      position:relative; z-index:1;
-      max-width:760px;
-      margin:0 auto;
+      position:relative;
+      z-index:1;
+      min-height:100%;
+      display:grid;
+      place-items:center;
       padding:24px 14px 30px;
     }
 
     .card{
-      background:var(--card);
-      border:1px solid var(--card-border);
-      border-radius:24px;
+      width:min(760px,100%);
+      background:var(--card-bg);
+      border:1px solid var(--card-bd);
+      border-radius:26px;
       box-shadow:var(--shadow);
-      padding:20px 16px 18px;
-      backdrop-filter: blur(14px) saturate(125%);
-      -webkit-backdrop-filter: blur(14px) saturate(125%);
+      backdrop-filter: blur(14px) saturate(130%);
+      -webkit-backdrop-filter: blur(14px) saturate(130%);
+      padding:22px 16px 18px;
+      position:relative;
+      overflow:hidden;
+      animation: cardIn .9s ease-out both;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute; inset:auto -30% -65% -30%;
+      height:240px;
+      background:radial-gradient(closest-side, #a855f73d, transparent 75%);
+      pointer-events:none;
+    }
+
+    @keyframes cardIn{
+      from{opacity:0; transform:translateY(10px) scale(.985)}
+      to{opacity:1; transform:translateY(0) scale(1)}
     }
 
     .title{
-      margin:0;
+      margin:2px 0 0;
       font-size:34px;
       line-height:1.2;
       text-align:center;
       letter-spacing:.3px;
       word-break:break-word;
-      font-weight:800;
-      text-shadow:0 4px 22px rgba(154,99,255,.35);
+      font-weight:900;
+      background:linear-gradient(90deg,#f8f4ff,#d7c4ff 45%,#b999ff);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 10px 28px rgba(155,108,255,.22);
     }
 
     .subtitle{
@@ -90,7 +143,7 @@
       color:var(--muted);
       font-size:13px;
       text-align:center;
-      letter-spacing:.2px;
+      letter-spacing:.25px;
     }
 
     .btn-list{
@@ -105,38 +158,55 @@
       align-items:center;
       gap:12px;
       width:100%;
+      min-height:60px;
+      padding:13px 14px;
+      border-radius:14px;
       text-decoration:none;
       color:var(--text);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid var(--line);
-      border-radius:14px;
-      padding:13px 14px;
-      min-height:58px;
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
       box-shadow:var(--glow);
-      transition:all .18s ease;
+      transition:transform .38s ease, border-color .38s ease, box-shadow .38s ease, background .38s ease;
+      overflow:hidden;
+      isolation:isolate;
     }
 
+    .link-btn::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0; left:-35%;
+      width:30%;
+      transform:skewX(-20deg);
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transition:left 1.2s ease;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .link-btn:hover::before{ left:120%; }
+
     .link-btn:hover{
-      transform:translateY(-1px);
-      background:linear-gradient(180deg,var(--btn-hover),rgba(255,255,255,.03));
-      border-color:rgba(208,177,255,.6);
-      box-shadow:0 0 0 1px rgba(224,202,255,.26), 0 14px 30px rgba(112,63,236,.30);
+      transform:translateY(-2px);
+      border-color:rgba(226,203,255,.68);
+      background:linear-gradient(180deg, rgba(177,127,255,.18), rgba(255,255,255,.03));
+      box-shadow:0 0 0 1px rgba(236,220,255,.24), 0 18px 36px rgba(110,62,235,.34);
     }
 
     .link-btn:active{ transform:translateY(0) scale(.995); }
 
     .logo{
-      width:26px;
-      height:26px;
-      border-radius:8px;
+      width:28px; height:28px;
+      border-radius:9px;
       object-fit:cover;
-      flex:0 0 26px;
+      flex:0 0 28px;
       border:1px solid rgba(255,255,255,.2);
       background:#fff;
+      z-index:1;
     }
 
     .label{
-      font-weight:700;
+      z-index:1;
+      font-weight:800;
       font-size:18px;
       letter-spacing:.2px;
     }
@@ -148,39 +218,38 @@
     }
 
     .ig-round{
-      width:52px;
-      height:52px;
-      border-radius:999px;
-      border:1px solid rgba(233,216,255,.45);
-      background:radial-gradient(circle at 30% 30%, #ffffff 0%, #f4eefe 55%, #ece0ff 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      box-shadow:
-        0 0 0 4px rgba(203,170,255,.12),
-        0 10px 24px rgba(130,74,255,.35);
-      transition:transform .18s ease, box-shadow .18s ease;
+      width:54px;height:54px;border-radius:999px;
+      border:1px solid rgba(238,224,255,.5);
+      background:radial-gradient(circle at 30% 30%, #fff 0%, #f4eefe 56%, #e8ddff 100%);
+      display:flex;align-items:center;justify-content:center;text-decoration:none;
+      box-shadow:0 0 0 4px rgba(203,170,255,.14), 0 12px 26px rgba(130,74,255,.4);
+      transition:transform .38s ease, box-shadow .38s ease, filter .38s ease;
     }
-
     .ig-round:hover{
-      transform:translateY(-1px) scale(1.03);
-      box-shadow:
-        0 0 0 5px rgba(221,193,255,.2),
-        0 16px 28px rgba(145,84,255,.42);
+      transform:translateY(-2px) scale(1.045);
+      box-shadow:0 0 0 6px rgba(221,193,255,.2), 0 18px 30px rgba(145,84,255,.45);
+      filter:saturate(1.1);
     }
-
-    .ig-round img{
-      width:24px;
-      height:24px;
-      object-fit:contain;
-    }
+    .ig-round img{width:24px;height:24px;object-fit:contain}
 
     .warn{
       margin-top:10px;
-      color:#ffb7c2;
+      color:var(--danger);
       font-size:12px;
       text-align:center;
+      min-height:16px;
+    }
+
+    .badge{
+      width:max-content;
+      margin:0 auto 12px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      letter-spacing:.3px;
+      color:#eaddff;
+      border:1px solid rgba(223,199,255,.34);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
     }
 
     @media (max-width:560px){
@@ -188,15 +257,24 @@
       .label{font-size:17px}
       .card{padding:18px 14px 16px}
     }
+
+    @media (prefers-reduced-motion: reduce){
+      .orb,.card,.link-btn,.ig-round{animation:none;transition:none}
+      .link-btn::before{display:none}
+    }
   </style>
 </head>
 <body>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
   <div class="bg-logo"></div>
 
   <main class="wrap">
     <section class="card">
+      <div class="badge">@OK._.CITY</div>
       <h1 class="title" id="songTitle">載入中...</h1>
-      <div class="subtitle">選擇平台開啟搜尋結果</div>
+      <div class="subtitle">點！！前往收聽！！！</div>
 
       <div class="btn-list">
         <a id="yt" class="link-btn" target="_blank" rel="noopener">
@@ -236,7 +314,9 @@
     const warnEl = document.getElementById('warn');
 
     const hasData = artist || song;
-    titleEl.textContent = hasData ? `${artist || '未知作者'} - ${song || '未知歌名'}` : '未提供作者與歌名';
+    titleEl.textContent = hasData
+      ? `${artist || '未知作者'} - ${song || '未知歌名'}`
+      : '未提供作者與歌名';
 
     const q = [artist, song].filter(Boolean).join(' ').trim();
     const enc = encodeURIComponent(q);
@@ -252,14 +332,16 @@
       const a = document.getElementById(id);
       if (!q) {
         a.removeAttribute('href');
-        a.style.opacity = '.55';
+        a.style.opacity = '.5';
         a.style.pointerEvents = 'none';
       } else {
         a.href = links[id];
       }
     });
 
-    if (!q) warnEl.textContent = '提示：請從 LINE 使用「找歌 藝人 歌名」進入此頁。';
+    if (!q) {
+      warnEl.textContent = '提示：請從 LINE 使用「找歌 藝人 歌名」進入此頁。';
+    }
   </script>
 </body>
 </html>
